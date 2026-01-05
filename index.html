@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="A simple library management application - The Odin Project"
+		/>
+		<title>Library | The Odin Project</title>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header-logo">
+				<img
+					src="./img/books.png"
+					alt="Books icon"
+					class="header-logo-icon"
+				/>
+				<h1 class="header-logo-text">Library</h1>
+			</div>
+			<button class="header-btn" id="addBook" type="button">
+				New Book
+			</button>
+		</header>
+
+		<main class="library">
+			<section class="library-stats">
+				<div class="stats-item">
+					<span class="stats-label">Total Books:</span>
+					<p class="stats-value books-counter">0</p>
+				</div>
+				<div class="stats-item">
+					<span class="stats-label">Read Books:</span>
+					<p class="stats-value already-read-books">0</p>
+				</div>
+				<div class="stats-item">
+					<span class="stats-label">To Read:</span>
+					<p class="stats-value pending-books-counter">0</p>
+				</div>
+				<div class="stats-item">
+					<span class="stats-label">Total Pages Read:</span>
+					<p class="stats-value total-pages-already-read">0</p>
+				</div>
+			</section>
+
+			<section class="library-container" id="library-container">
+				<div class="library-empty-state">
+					<p class="empty-state-text">The library is empty!</p>
+					<img
+						src="./img/ilustration.png"
+						alt="Empty library illustration"
+						class="empty-state-image"
+					/>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<p class="footer-text">
+				Coded by
+				<a
+					href="https://github.com/gvillarroel-dev"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="footer-link"
+					>Villarroel Giuliana</a
+				>
+				| A project from
+				<a
+					href="https://www.theodinproject.com"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="footer-link"
+					>The Odin Project</a
+				>
+			</p>
+		</footer>
+
+		<script src="./js/script.js"></script>
+	</body>
+</html>
