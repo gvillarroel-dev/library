@@ -27,6 +27,7 @@ Book.prototype.toggleRead = function () {
 function addBookToLibrary(title, author, numberOfPages, read) {
 	const newBook = new Book(title, author, numberOfPages, read);
 	myLibrary.push(newBook);
+	updateLibrary();
 
 	return `The book has been added successfully`;
 }
@@ -35,7 +36,30 @@ function removeBook(bookId) {
 	const indexBook = myLibrary.findIndex((book) => book.id === bookId);
 	if (indexBook !== -1) {
 		myLibrary.splice(indexBook, 1);
+		updateLibrary();
 	}
+}
+
+function toggleBookRead(bookId) {
+	const book = myLibrary.find((book) => book.id === bookId);
+	if (book) {
+		book.toggleRead();
+		updateLibrary();
+	}
+}
+
+function updateStats() {
+	const totalBooks = myLibrary.length;
+	const readBooks = myLibrary.filter((book) => book.read).length;
+	const pendingBooks = totalBooks - readBooks;
+	const pagesRead = myLibrary
+		.filter((book) => book.read)
+		.reduce((sum, book) => sum + Number(book.numberOfPages), 0);
+
+	booksCounter.textContent = totalBooks;
+	alreadyReadBooks.textContent = readBooks;
+	pendingBooksCounter.textContent = pendingBooks;
+	totalPagesRead.textContent = pagesRead;
 }
 
 // ========= construcción de elementos =========
@@ -62,6 +86,7 @@ function createBookCard(book) {
 	const readBtn = document.createElement("button");
 	readBtn.className = `btn-read ${book.read ? "read" : "not-read"}`;
 	readBtn.textContent = book.read ? "Read" : "Not Read";
+	readBtn.addEventListener("click", () => toggleBookRead(book.id));
 
 	const removeBtn = document.createElement("button");
 	removeBtn.className = "btn-remove";
@@ -79,16 +104,31 @@ function createBookCard(book) {
 	return cardBook;
 }
 
+function updateLibrary() {
+	const emptyState = libraryContainer.querySelector(".library-empty-state");
+	libraryContainer.innerHTML = "";
+
+	if (myLibrary.length === 0) {
+		if (emptyState) {
+			libraryContainer.appendChild(emptyState);
+		}
+	} else {
+		myLibrary.forEach((book) => {
+			const bookCard = createBookCard(book);
+			libraryContainer.appendChild(bookCard);
+		});
+	}
+
+	updateStats();
+}
+
+updateLibrary();
+
 // testing
 
 console.log(addBookToLibrary("Wolfsong", "T.J. Klune", 528, true));
 console.log(addBookToLibrary("Ravensong", "T.J. Klune", 480, true));
 console.log(addBookToLibrary("Heartsong", "T.J. Klune", 512, false));
 console.log(addBookToLibrary("Brothersong", "T.J. Klune", 496, false));
-
-// Renderizar las tarjetas
-myLibrary.forEach((book) => {
-	libraryContainer.appendChild(createBookCard(book));
-});
 
 console.log(myLibrary);
