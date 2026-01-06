@@ -24,7 +24,6 @@ Book.prototype.toggleRead = function () {
 	this.read = !this.read;
 };
 
-// ========= functions of library =========
 function addBookToLibrary(title, author, numberOfPages, read) {
 	const newBook = new Book(title, author, numberOfPages, read);
 	myLibrary.push(newBook);
@@ -39,9 +38,57 @@ function removeBook(bookId) {
 	}
 }
 
-console.log(addBookToLibrary("Songwolf", "T.J. Klune", 528, true));
-console.log(addBookToLibrary("Ravensong", "T.J. Klune", 528, true));
-console.log(addBookToLibrary("Hearthsong", "T.J. Klune", 512, true));
-console.log(addBookToLibrary("Brothersong", "T.J. Klune", 496, true));
+// ========= construcción de elementos =========
+function createBookCard(book) {
+	const cardBook = document.createElement("div");
+	cardBook.className = "book-card";
+	cardBook.dataset.bookId = book.id;
+
+	const bookTitle = document.createElement("h2");
+	bookTitle.className = "book-title";
+	bookTitle.textContent = book.title;
+
+	const bookAuthor = document.createElement("p");
+	bookAuthor.className = "book-author";
+	bookAuthor.textContent = `by ${book.author}`;
+
+	const bookPages = document.createElement("p");
+	bookPages.className = "book-pages";
+	bookPages.textContent = `${book.numberOfPages} pages`;
+
+	const actionsContainer = document.createElement("div");
+	actionsContainer.className = "book-actions";
+
+	const readBtn = document.createElement("button");
+	readBtn.className = `btn-read ${book.read ? "read" : "not-read"}`;
+	readBtn.textContent = book.read ? "Read" : "Not Read";
+
+	const removeBtn = document.createElement("button");
+	removeBtn.className = "btn-remove";
+	removeBtn.textContent = "Remove";
+	removeBtn.addEventListener("click", () => removeBook(book.id));
+
+	actionsContainer.appendChild(readBtn);
+	actionsContainer.appendChild(removeBtn);
+
+	cardBook.appendChild(bookTitle);
+	cardBook.appendChild(bookAuthor);
+	cardBook.appendChild(bookPages);
+	cardBook.appendChild(actionsContainer);
+
+	return cardBook;
+}
+
+// testing
+
+console.log(addBookToLibrary("Wolfsong", "T.J. Klune", 528, true));
+console.log(addBookToLibrary("Ravensong", "T.J. Klune", 480, true));
+console.log(addBookToLibrary("Heartsong", "T.J. Klune", 512, false));
+console.log(addBookToLibrary("Brothersong", "T.J. Klune", 496, false));
+
+// Renderizar las tarjetas
+myLibrary.forEach((book) => {
+	libraryContainer.appendChild(createBookCard(book));
+});
 
 console.log(myLibrary);
