@@ -17,28 +17,22 @@
 					src="./img/books.png"
 					alt="Books icon"
 					class="header-logo-icon"
+					width="40"
 				/>
 				<h1 class="header-logo-text">Library</h1>
 			</div>
-			<button class="header-btn" id="addBook" type="button">
+			<button class="header-btn" id="addBookBtn" type="button">
 				New Book
 			</button>
 		</header>
 
 		<main class="library">
-			<div class="modal-overlay" id="modalOverlay" hidden>
+			<div class="modal-overlay" id="modalOverlay">
 				<div class="modal">
 					<div class="modal-header">
 						<h2 class="modal-title" id="modalTitle">
 							Add New Book
 						</h2>
-						<button
-							type="button"
-							class="modal-close"
-							id="closeModal"
-						>
-							✕
-						</button>
 					</div>
 
 					<form class="modal-form" id="bookForm">
@@ -103,7 +97,11 @@
 						</div>
 
 						<div class="modal-actions">
-							<button type="submit" class="btn btn-primary">
+							<button
+								type="submit"
+								class="btn btn-primary"
+								id="addBook"
+							>
 								Add Book
 							</button>
 							<button
@@ -137,7 +135,7 @@
 			</section>
 
 			<section class="library-container" id="library-container">
-				<div class="library-empty-state" hidden>
+				<div class="library-empty-state">
 					<p class="empty-state-text">The library is empty!</p>
 					<img
 						src="./img/ilustration.png"
