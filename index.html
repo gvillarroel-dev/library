@@ -8,6 +8,7 @@
 			content="A simple library management application - The Odin Project"
 		/>
 		<title>Library | The Odin Project</title>
+		<link rel="stylesheet" href="./css/style.css" />
 	</head>
 	<body>
 		<header class="header">
@@ -25,27 +26,118 @@
 		</header>
 
 		<main class="library">
+			<div class="modal-overlay" id="modalOverlay" hidden>
+				<div class="modal">
+					<div class="modal-header">
+						<h2 class="modal-title" id="modalTitle">
+							Add New Book
+						</h2>
+						<button
+							type="button"
+							class="modal-close"
+							id="closeModal"
+						>
+							✕
+						</button>
+					</div>
+
+					<form class="modal-form" id="bookForm">
+						<div class="form-group">
+							<label for="bookTitle" class="form-label"
+								>Title</label
+							>
+							<input
+								type="text"
+								id="bookTitle"
+								name="title"
+								class="form-input"
+								placeholder="Enter book title"
+								required
+							/>
+						</div>
+
+						<div class="form-group">
+							<label for="bookAuthor" class="form-label"
+								>Author</label
+							>
+							<input
+								type="text"
+								id="bookAuthor"
+								name="author"
+								class="form-input"
+								placeholder="Enter author name"
+								required
+							/>
+						</div>
+
+						<div class="form-group">
+							<label for="bookPages" class="form-label"
+								>Pages</label
+							>
+							<input
+								type="number"
+								id="bookPages"
+								name="pages"
+								class="form-input"
+								placeholder="Enter number of pages"
+								min="1"
+								required
+							/>
+						</div>
+
+						<div class="form-group">
+							<label for="bookRead" class="form-label"
+								>Read?</label
+							>
+							<div class="form-checkbox-wrapper">
+								<input
+									type="checkbox"
+									id="bookRead"
+									name="read"
+									class="form-checkbox"
+								/>
+								<span class="form-checkbox-label"
+									>I've already read this book</span
+								>
+							</div>
+						</div>
+
+						<div class="modal-actions">
+							<button type="submit" class="btn btn-primary">
+								Add Book
+							</button>
+							<button
+								type="button"
+								class="btn btn-secondary"
+								id="cancelModal"
+							>
+								Cancel
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
 			<section class="library-stats">
 				<div class="stats-item">
-					<span class="stats-label">Total Books:</span>
-					<p class="stats-value books-counter">0</p>
+					<p class="stats-label">Total Books:</p>
+					<span class="stats-value books-counter">0</span>
 				</div>
 				<div class="stats-item">
-					<span class="stats-label">Read Books:</span>
-					<p class="stats-value already-read-books">0</p>
+					<p class="stats-label">Read Books:</p>
+					<span class="stats-value already-read-books">0</span>
 				</div>
 				<div class="stats-item">
-					<span class="stats-label">To Read:</span>
-					<p class="stats-value pending-books-counter">0</p>
+					<p class="stats-label">To Read:</p>
+					<span class="stats-value pending-books-counter">0</span>
 				</div>
 				<div class="stats-item">
-					<span class="stats-label">Total Pages Read:</span>
-					<p class="stats-value total-pages-already-read">0</p>
+					<p class="stats-label">Total Pages Read:</p>
+					<span class="stats-value total-pages-already-read">0</span>
 				</div>
 			</section>
 
 			<section class="library-container" id="library-container">
-				<div class="library-empty-state">
+				<div class="library-empty-state" hidden>
 					<p class="empty-state-text">The library is empty!</p>
 					<img
 						src="./img/ilustration.png"
