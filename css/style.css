@@ -14,6 +14,13 @@
 	--color-gray-600: #807f7f;
 	--color-gray-700: #525252;
 
+	--color-green-300: #9ecebb;
+	--color-green-700: #3c7949;
+	--color-red-300: #dec5c5;
+	--color-red-700: #b13636;
+	--color-blue-300: #9ec0ce;
+	--color-blue-700: #2b7d9d;
+
 	--font-primary: "Nunito", Tahoma, Geneva, Verdana, sans-serif;
 	--font-heading: "Inria Serif", "Segoe UI", Tahoma, Geneva, Verdana,
 		sans-serif;
@@ -128,6 +135,7 @@ html {
 
 .modal {
 	width: 80%;
+	max-width: 600px;
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
@@ -296,12 +304,13 @@ html {
 /* =============== LIBRARY CONTAINER =============== */
 .library-container {
 	width: 96%;
-	height: calc(100vh - 450px);
 	padding: 7px;
+
 	flex-grow: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 9px;
+
 	border-radius: var(--border-radius-sm);
 	background: var(--color-surface);
 	box-shadow: var(--shadow-sm);
@@ -337,6 +346,91 @@ html {
 }
 
 /* =============== BOOK CARD =============== */
+.book-card {
+	width: 100%;
+	height: 290px;
+	padding: 1rem;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+
+	background: var(--color-gray-300);
+	border-radius: var(--border-radius-sm);
+	text-align: center;
+}
+
+.book-title {
+	font-size: var(--font-size-lg);
+	font-family: var(--font-heading);
+	font-weight: var(--font-weight-bold);
+	text-transform: uppercase;
+	margin-bottom: 0.2rem;
+}
+
+.book-author {
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-semibold);
+	font-family: var(--font-heading);
+	margin-bottom: calc(290px - 200px);
+	text-transform: capitalize;
+}
+
+.book-pages {
+	font-family: var(--font-heading);
+	font-size: var(--font-size-xs);
+}
+
+.book-actions {
+	width: 100%;
+	margin-top: 1rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 7px;
+
+	text-align: center;
+}
+
+.btn-read,
+.btn-remove {
+	padding: 0.65rem;
+	font-family: var(--font-heading);
+	font-size: var(--font-size-base);
+	border-radius: var(--border-radius-sm);
+
+	cursor: pointer;
+	transition: var(--transition-base);
+}
+
+.btn-read.read {
+	background: var(--color-green-300);
+	border: 1px solid var(--color-green-700);
+	color: var(--color-green-700);
+}
+
+.btn-read:hover,
+.btn-remove:hover {
+	border-radius: var(--border-radius-md);
+}
+
+.btn-read.not-read {
+	background: var(--color-blue-300);
+	color: var(--color-blue-700);
+	border: 1px solid var(--color-blue-700);
+}
+
+.btn-remove {
+	background: var(--color-red-300);
+	border: 1px solid var(--color-red-700);
+	color: var(--color-red-700);
+}
+
+.btn-remove:hover {
+	background: rgba(0, 0, 0, 0.1);
+}
 
 /* =============== FOOTER =============== */
 .footer {
