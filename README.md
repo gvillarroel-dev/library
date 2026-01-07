@@ -1,5 +1,7 @@
 # 📚 Library Management App
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A simple and intuitive web application to manage your personal book collection. Built with vanilla JavaScript, HTML, and CSS as part of [The Odin Project](https://www.theodinproject.com) curriculum.
 
 ![Library App Screenshot](./img/library-preview.png)
@@ -111,7 +113,7 @@ library/
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/library.git
+    git clone https://github.com/gvillarroel-dev/library.git
     ```
 
 2. Navigate to project directory:
