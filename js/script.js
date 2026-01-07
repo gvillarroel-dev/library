@@ -5,8 +5,15 @@ const booksCounter = document.querySelector(".books-counter");
 const alreadyReadBooks = document.querySelector(".already-read-books");
 const pendingBooksCounter = document.querySelector(".pending-books-counter");
 const totalPagesRead = document.querySelector(".total-pages-already-read");
+const bookForm = document.querySelector("#bookForm");
 
-// Book constructor -
+const openModal = document.querySelector("#addBookBtn");
+const cancelModal = document.querySelector("#cancelModal");
+const modal = document.querySelector(".modal-overlay");
+
+let emptyStateElement = null;
+
+// ========= book constructor =========
 function Book(title, author, numberOfPages, read) {
 	if (!new.target) {
 		throw Error("Must use the new operator to call the constructor");
@@ -19,17 +26,29 @@ function Book(title, author, numberOfPages, read) {
 	this.read = read || false;
 }
 
-// método que cambia el estado de lectura del libro
 Book.prototype.toggleRead = function () {
 	this.read = !this.read;
 };
 
-function addBookToLibrary(title, author, numberOfPages, read) {
+// ========= library functions =========
+
+function addBookToLibrary() {
+	const title = document.querySelector("#bookTitle").value.trim();
+	const author = document.querySelector("#bookAuthor").value.trim();
+	const numberOfPages = parseInt(document.querySelector("#bookPages").value);
+	const read = document.querySelector("#bookRead").checked;
+
+	if (!title || !author || isNaN(numberOfPages) || numberOfPages <= 0) {
+		alert("Please fill all fields correctly");
+		return false;
+	}
+
 	const newBook = new Book(title, author, numberOfPages, read);
 	myLibrary.push(newBook);
 	updateLibrary();
+	bookForm.reset();
 
-	return `The book has been added successfully`;
+	return true;
 }
 
 function removeBook(bookId) {
@@ -62,7 +81,7 @@ function updateStats() {
 	totalPagesRead.textContent = pagesRead;
 }
 
-// ========= construcción de elementos =========
+// ========= construction of card-book elements =========
 function createBookCard(book) {
 	const cardBook = document.createElement("div");
 	cardBook.className = "book-card";
@@ -104,14 +123,34 @@ function createBookCard(book) {
 	return cardBook;
 }
 
+function createEmptyState() {
+	const emptyState = document.createElement("div");
+	emptyState.className = "library-empty-state";
+
+	const emptyStateText = document.createElement("p");
+	emptyStateText.className = "empty-state-text";
+	emptyStateText.textContent = "The library is empty!";
+
+	const emptyStateImg = document.createElement("img");
+	emptyStateImg.className = "empty-state-image";
+	emptyStateImg.src = "./img/illustration.png";
+	emptyStateImg.alt = "Empty library illustration";
+
+	emptyState.appendChild(emptyStateText);
+	emptyState.appendChild(emptyStateImg);
+	libraryContainer.appendChild(emptyState);
+
+	return emptyState;
+}
+
 function updateLibrary() {
-	const emptyState = libraryContainer.querySelector(".library-empty-state");
 	libraryContainer.innerHTML = "";
 
 	if (myLibrary.length === 0) {
-		if (emptyState) {
-			libraryContainer.appendChild(emptyState);
+		if (!emptyStateElement) {
+			emptyStateElement = createEmptyState();
 		}
+		libraryContainer.appendChild(emptyStateElement);
 	} else {
 		myLibrary.forEach((book) => {
 			const bookCard = createBookCard(book);
@@ -122,13 +161,29 @@ function updateLibrary() {
 	updateStats();
 }
 
+// =========== eventListeners ===========
+openModal.addEventListener("click", () => {
+	modal.style.display = "flex";
+});
+
+cancelModal.addEventListener("click", () => {
+	modal.style.display = "none";
+	bookForm.reset();
+});
+
+bookForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+
+	if (addBookToLibrary()) {
+		modal.style.display = "none";
+	}
+});
+
+modal.addEventListener("click", (e) => {
+	if (e.target === modal) {
+		modal.style.display = "none";
+		bookForm.reset();
+	}
+});
+
 updateLibrary();
-
-// testing
-
-console.log(addBookToLibrary("Wolfsong", "T.J. Klune", 528, true));
-console.log(addBookToLibrary("Ravensong", "T.J. Klune", 480, true));
-console.log(addBookToLibrary("Heartsong", "T.J. Klune", 512, false));
-console.log(addBookToLibrary("Brothersong", "T.J. Klune", 496, false));
-
-console.log(myLibrary);
