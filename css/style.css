@@ -348,7 +348,6 @@ html {
 /* =============== BOOK CARD =============== */
 .book-card {
 	width: 100%;
-	height: 290px;
 	padding: 1rem;
 
 	display: flex;
