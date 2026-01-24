@@ -89,6 +89,7 @@ class LibraryUI {
 		this.cancelModalBtn = document.querySelector("#cancelModal");
 
 		this.emptyStateElement = null;
+		this.initEventListeners();
 	}
 
 	handleAddBook() {
@@ -97,12 +98,7 @@ class LibraryUI {
 		const numberOfPages = this.bookForm.querySelector("#bookPages").value;
 		const read = this.bookForm.querySelector("#bookRead").checked;
 
-		const success = this.library.addBookToLibrary(
-			title,
-			author,
-			numberOfPages,
-			read,
-		);
+		const success = this.library.addBookToLibrary(title, author, numberOfPages, read);
 
 		if (success) {
 			this.bookForm.reset();
@@ -216,5 +212,30 @@ class LibraryUI {
 		this.updateStats();
 	}
 
-	initEventListeners() {}
+	initEventListeners() {
+		this.openModalBtn.addEventListener("click", () => {
+			this.modal.style.display = "flex";
+		});
+
+		this.cancelModalBtn.addEventListener("click", () => {
+			this.modal.style.display = "none";
+			this.bookForm.reset();
+		});
+
+		this.bookForm.addEventListener("submit", (e) => {
+			e.preventDefault();
+			this.handleAddBook();
+		});
+
+		this.modal.addEventListener("click", (e) => {
+			if (e.target === this.modal) {
+				this.modal.style.display = "none";
+				this.bookForm.reset();
+			}
+		});
+	}
 }
+
+
+const library = new Library();
+const UI = new LibraryUI(library);
