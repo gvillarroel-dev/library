@@ -136,7 +136,46 @@ class LibraryUI {
 		this.totalPagesRead = stats.pagesRead;
 	}
 
-	createBookCard(book) {}
+	createBookCard(book) {
+		const cardBook = document.createElement("div");
+		cardBook.className = "book-card";
+		cardBook.dataset.bookId = book.id;
+
+		const bookTitle = document.createElement("h2");
+		bookTitle.className = "book-title";
+		bookTitle.textContent = book.title;
+
+		const bookAuthor = document.createElement("p");
+		bookAuthor.className = "book-author";
+		bookAuthor.textContent = `by ${book.author}`;
+
+		const bookPages = document.createElement("p");
+		bookPages.className = "book-pages";
+		bookPages.textContent = `${book.numberOfPages} pages`;
+
+		const actionsContainer = document.createElement("div");
+		actionsContainer.className = "book-actions";
+
+		const readBtn = document.createElement("button");
+		readBtn.className = `btn-read ${book.read ? "read" : "not-read"}`;
+		readBtn.textContent = book.read ? "Read" : "Not Read";
+		readBtn.addEventListener("click", () => this.handleToggleRead(book.id));
+
+		const removeBtn = document.createElement("button");
+		removeBtn.className = "btn-remove";
+		removeBtn.textContent = "Remove";
+		removeBtn.addEventListener("click", () => this.handleRemoveBook(book.id));
+
+		actionsContainer.appendChild(readBtn);
+		actionsContainer.appendChild(removeBtn);
+
+		cardBook.appendChild(bookTitle);
+		cardBook.appendChild(bookAuthor);
+		cardBook.appendChild(bookPages);
+		cardBook.appendChild(actionsContainer);
+
+		return cardBook;
+	}
 
 	createEmptyState() {}
 
@@ -144,7 +183,6 @@ class LibraryUI {
 
 	initEventListeners() {}
 }
-
 
 // TESTING
 const library = new Library();
