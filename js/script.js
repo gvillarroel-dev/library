@@ -197,30 +197,24 @@ class LibraryUI {
 		return emptyState;
 	}
 
-	updateLibrary() {}
+	updateLibrary() {
+		this.libraryContainer.innerHTML = "";
+
+		const books = this.library.getBooks();
+		if (books.length === 0) {
+			if (!this.emptyStateElement) {
+				this.emptyStateElement = this.createEmptyState();
+			}
+			this.libraryContainer.appendChild(this.emptyStateElement);
+		} else {
+			books.forEach((book) => {
+				const bookCard = this.createBookCard(book);
+				this.libraryContainer.appendChild(bookCard);
+			});
+		}
+
+		this.updateStats();
+	}
 
 	initEventListeners() {}
 }
-
-// TESTING
-const library = new Library();
-const libraryUI = new LibraryUI(library);
-
-library.addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, true);
-library.addBookToLibrary("1984", "George Orwell", 328, false);
-
-console.log(`Stats: ${library.updateStats().totalBooks}`);
-console.log(`All Books: ${library.getBooks()}`);
-
-// test a UI
-const firstBook = library.getBooks()[0];
-console.log(`Before toggle: ${firstBook.read}`);
-libraryUI.handleToggleRead(firstBook.id);
-console.log(`After toggle: ${library.getBooks()[0].read}`);
-
-// remove
-console.log(`Before remove: ${library.getBooks().length}`);
-libraryUI.handleRemoveBook(firstBook.id);
-console.log(`After remove: ${library.getBooks().length}`);
-
-console.log(`Stats: ${library.updateStats().totalBooks}`);
