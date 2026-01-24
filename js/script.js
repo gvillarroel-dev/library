@@ -237,3 +237,4 @@ class LibraryUI {
 
 const library = new Library();
 const UI = new LibraryUI(library);
+UI.updateLibrary();
