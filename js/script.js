@@ -2,9 +2,7 @@
 class Book {
 	constructor(title, author, numberOfPages, read) {
 		if (!new.target) {
-			throw new Error(
-				"Must use the new operator to call the constructor",
-			);
+			throw new Error("Must use the new operator to call the constructor");
 		}
 
 		this.id = crypto.randomUUID();
@@ -128,8 +126,8 @@ class LibraryUI {
 
 		this.booksCounter.textContent = stats.totalBooks;
 		this.alreadyReadBooks.textContent = stats.readBooks;
-		this.pendingBooksCounter = stats.pendingBooks;
-		this.totalPagesRead = stats.pagesRead;
+		this.pendingBooksCounter.textContent = stats.pendingBooks;
+		this.totalPagesRead.textContent = stats.pagesRead;
 	}
 
 	createBookCard(book) {
@@ -188,7 +186,7 @@ class LibraryUI {
 
 		emptyState.appendChild(emptyStateText);
 		emptyState.appendChild(emptyStateImg);
-		
+
 		this.libraryContainer.appendChild(emptyState);
 		return emptyState;
 	}
