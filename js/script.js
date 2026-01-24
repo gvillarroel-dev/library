@@ -177,7 +177,25 @@ class LibraryUI {
 		return cardBook;
 	}
 
-	createEmptyState() {}
+	createEmptyState() {
+		const emptyState = document.createElement("div");
+		emptyState.className = "library-empty-state";
+
+		const emptyStateText = document.createElement("p");
+		emptyStateText.className = "empty-state-text";
+		emptyStateText.textContent = "The library is empty!";
+
+		const emptyStateImg = document.createElement("img");
+		emptyStateImg.className = "empty-state-image";
+		emptyStateImg.src = "./img/illustration.png";
+		emptyStateImg.alt = "Empty library illustration";
+
+		emptyState.appendChild(emptyStateText);
+		emptyState.appendChild(emptyStateImg);
+		
+		this.libraryContainer.appendChild(emptyState);
+		return emptyState;
+	}
 
 	updateLibrary() {}
 
