@@ -190,6 +190,25 @@ html {
 	border: 1px solid var(--color-gray-600);
 }
 
+.form-input:focus {
+	outline: none;
+}
+
+.form-input.invalid {
+	border: 2px solid red;
+}
+
+.form-input.valid {
+	border: 2px solid green;
+}
+
+.error {
+	font-size: 12px;
+	color: red;
+	height: 14px;
+}
+
+
 .form-checkbox-wrapper {
 	display: flex;
 	justify-content: center;
