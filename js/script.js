@@ -2,7 +2,7 @@
 class Book {
 	constructor(title, author, numberOfPages, read) {
 		if (!new.target) {
-			throw new Error("Must use the new operator to call the constructor");
+			console.error("Must use the new operator to call the constructor");
 		}
 
 		this.id = crypto.randomUUID();
@@ -86,6 +86,20 @@ class LibraryUI {
 		this.openModalBtn = document.querySelector("#addBookBtn");
 		this.cancelModalBtn = document.querySelector("#cancelModal");
 
+		this.messages = {
+			bookTitle: {
+				valueMissing: "The book title must be filled in!",
+			},
+			bookAuthor: {
+				valueMissing: "The author\'s name must be filled in!",
+			},
+			bookPages: {
+				valueMissing: "The number of pages is required",
+				rangeUnderflow: "The number of pages must be greater than 0",
+				badInput: "The number of pages must be a number",
+			},
+		};
+
 		this.emptyStateElement = null;
 		this.initEventListeners();
 	}
@@ -96,7 +110,12 @@ class LibraryUI {
 		const numberOfPages = this.bookForm.querySelector("#bookPages").value;
 		const read = this.bookForm.querySelector("#bookRead").checked;
 
-		const success = this.library.addBookToLibrary(title, author, numberOfPages, read);
+		const success = this.library.addBookToLibrary(
+			title,
+			author,
+			numberOfPages,
+			read,
+		);
 
 		if (success) {
 			this.bookForm.reset();
@@ -158,7 +177,9 @@ class LibraryUI {
 		const removeBtn = document.createElement("button");
 		removeBtn.className = "btn-remove";
 		removeBtn.textContent = "Remove";
-		removeBtn.addEventListener("click", () => this.handleRemoveBook(book.id));
+		removeBtn.addEventListener("click", () =>
+			this.handleRemoveBook(book.id),
+		);
 
 		actionsContainer.appendChild(readBtn);
 		actionsContainer.appendChild(removeBtn);
@@ -220,30 +241,20 @@ class LibraryUI {
 			this.bookForm.reset();
 		});
 
+		this.bookForm.querySelectorAll("input").forEach((field) => {
+			field.addEventListener("input", () => this.validateField(field));
+			field.addEventListener("blur", () => this.validateField(field));
+		});
+
 		this.bookForm.addEventListener("submit", (e) => {
 			e.preventDefault();
-			
-			const titleInput = this.bookForm.querySelector("#bookTitle");
-			const authorInput = this.bookForm.querySelector("#bookAuthor");
-			const pagesInput = this.bookForm.querySelector("#bookPages");
+			const fields = this.bookForm.querySelectorAll("input");
+			const isValid = [...fields].every((field) => this.validateField(field));
 
-			[titleInput, authorInput, pagesInput].forEach((i) => i.setCustomValidity(""));
-
-			if (!titleInput.value.trim()) {
-				titleInput.setCustomValidity("The book title must be filled in");
-			}
-			if (!authorInput.value.trim()) {
-				authorInput.setCustomValidity("The author's name must be filled in");
-			}
-			if (!pagesInput.value || parseInt(pagesInput.value) <= 0) {
-				pagesInput.setCustomValidity("The number of pages must be greater than 0");
-			}
-
-			if (!this.bookForm.checkValidity()) {
+			if (!isValid) {
 				this.bookForm.reportValidity();
 				return;
 			}
-
 			this.handleAddBook();
 		});
 
@@ -254,8 +265,35 @@ class LibraryUI {
 			}
 		});
 	}
-}
 
+	validateField(field) {
+		if (field.type === "checkbox") return true;
+
+		const validity = field.validity;
+		const errorElement = field.nextElementSibling;
+		const fieldMessages = this.messages[field.name];
+		let message = "";
+
+		for (let error in validity) {
+			if (validity[error] && fieldMessages?.[error]) {
+				message = fieldMessages[error];
+				break;
+			}
+		}
+
+		if (message) {
+			field.classList.add("invalid");
+			field.classList.remove("valid");
+			errorElement.textContent = message;
+			return false;
+		}
+
+		field.classList.remove("invalid");
+		field.classList.add("valid");
+		errorElement.textContent = "";
+		return !message;
+	}
+}
 
 const library = new Library();
 const UI = new LibraryUI(library);
