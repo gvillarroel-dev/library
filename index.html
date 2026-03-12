@@ -36,11 +36,9 @@
 						</h2>
 					</div>
 
-					<form class="modal-form" id="bookForm">
+					<form class="modal-form" id="bookForm" novalidate>
 						<div class="form-group">
-							<label for="bookTitle" class="form-label"
-								>Title</label
-							>
+							<label for="bookTitle" class="form-label">Title</label>
 							<input
 								type="text"
 								id="bookTitle"
@@ -48,13 +46,12 @@
 								class="form-input"
 								placeholder="Enter book title"
 								required
+								minlength="1"
 							/>
 						</div>
 
 						<div class="form-group">
-							<label for="bookAuthor" class="form-label"
-								>Author</label
-							>
+							<label for="bookAuthor" class="form-label">Author</label>
 							<input
 								type="text"
 								id="bookAuthor"
@@ -62,13 +59,12 @@
 								class="form-input"
 								placeholder="Enter author name"
 								required
+								minlength="1"
 							/>
 						</div>
 
 						<div class="form-group">
-							<label for="bookPages" class="form-label"
-								>Pages</label
-							>
+							<label for="bookPages" class="form-label">Pages</label>
 							<input
 								type="number"
 								id="bookPages"
