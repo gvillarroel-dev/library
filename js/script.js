@@ -222,6 +222,28 @@ class LibraryUI {
 
 		this.bookForm.addEventListener("submit", (e) => {
 			e.preventDefault();
+			
+			const titleInput = this.bookForm.querySelector("#bookTitle");
+			const authorInput = this.bookForm.querySelector("#bookAuthor");
+			const pagesInput = this.bookForm.querySelector("#bookPages");
+
+			[titleInput, authorInput, pagesInput].forEach((i) => i.setCustomValidity(""));
+
+			if (!titleInput.value.trim()) {
+				titleInput.setCustomValidity("The book title must be filled in");
+			}
+			if (!authorInput.value.trim()) {
+				authorInput.setCustomValidity("The author's name must be filled in");
+			}
+			if (!pagesInput.value || parseInt(pagesInput.value) <= 0) {
+				pagesInput.setCustomValidity("The number of pages must be greater than 0");
+			}
+
+			if (!this.bookForm.checkValidity()) {
+				this.bookForm.reportValidity();
+				return;
+			}
+
 			this.handleAddBook();
 		});
 
